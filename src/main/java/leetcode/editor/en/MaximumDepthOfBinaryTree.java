@@ -40,6 +40,8 @@ public class MaximumDepthOfBinaryTree{
      * 结束条件应该是左右子树都为null的情况
      * 同时，因为涉及到左右子树两个单独的遍历，同时还要考虑代码短路提前return的情况
      * 最终可以得到一个单行的解法，递归的奇技淫巧
+     *
+     * 另外，这题和之前的爬楼梯太像了，分治思想，递归实现太方便了
      */
 
     class TreeNode{
