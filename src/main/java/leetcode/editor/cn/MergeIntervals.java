@@ -33,32 +33,39 @@
 
 package leetcode.editor.cn;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class MergeIntervals{
     public static void main(String[] args){
         Solution solution = new MergeIntervals().new Solution();
-        System.out.println(solution.merge(new int[][]{{1,3},{2,6},{8,10},{15,18}}));
+        System.out.println(Arrays.deepToString(solution.merge(new int[][]{{1,3}, {2,6},{8,10},{15,18}})));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[][] merge(int[][] intervals) {
         //按左边界排序
         Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
-
+        List<int[]> result = new ArrayList<>();
         for (int i = 0; i < intervals.length; i++) {
             int left = intervals[i][0];
             int right = intervals[i][1];
-            for (int j = i+1; j < intervals.length; j++) {
-                if(intervals[j][0] < right){
-                    right = intervals[j][1];
+            int j=i+1;
+            for (; j < intervals.length; j++) {
+                if(intervals[j][0] <= right){
+                    if(intervals[j][1] > right) {
+                        right = intervals[j][1];
+                    }
                 }else{
-
+                    break;
                 }
             }
+            i=j-1;
+            result.add(new int[]{left, right});
         }
-        return null;
+        return result.toArray(new int[result.size()][2]);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
