@@ -34,6 +34,7 @@ public class LianXuZiShuZuDeZuiDaHeLcof{
 class Solution {
     public int maxSubArray(int[] nums) {
 
+        return 0;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
