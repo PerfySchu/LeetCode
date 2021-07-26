@@ -72,14 +72,27 @@ class Solution {
         }
         //虚拟头结点
         ListNode vHead = new ListNode(0, head);
-        ListNode temp = vHead;
-        while (head != null){
-            while(head.next != null && head.val == head.next.val){
-                head = head.next;
+        //双指针
+        ListNode left = vHead;
+        ListNode right = vHead.next;
+        while (right != null){
+            int pre = right.val;
+            //preNode 记录当次遍历的起点
+            ListNode preNode = null;
+            int count = 0;
+            while(right != null && right.val == pre){
+                count ++;
+                preNode = right;
+                right = right.next;
             }
-            temp.next = head;
-            head = head.next;
-            temp = temp.next;
+            if(count == 1){
+                //如果中途没有重复节点，直接将指针接上即可
+                left.next = preNode;
+                left = left.next;
+            }else{
+                //如果有重复节点，这将指正直接指向重复节点后一个节点
+                left.next = right;
+            }
         }
 
         return vHead.next;
