@@ -77,30 +77,24 @@ class Solution {
 
         boolean[] mark = new boolean[n];
         Arrays.fill(mark, false);
-        mark[k-1] = true;
-        int count = 1;
-        while (count <= n){
+        for (int i = 0; i < n; i++) {
             int x = -1;
             //寻找当前最小路径
-            for (int i = 0; i < n; i++) {
-                if(!mark[i] && (x == -1 || distance[i] < distance[x])){
-                    x = i;
+            for (int y = 0; y < n; y++) {
+                if(!mark[y] && (x == -1 || distance[y] < distance[x])){
+                    x = y;
                 }
-            }
-            if(x == -1){
-                break;
             }
             mark[x] = true;
 
             //寻找最短路径
-            for (int i = 0; i < n; i++) {
+            for (int y = 0; y < n; y++) {
                 //if(!mark[i] && INF != values[x][i]
                 //        && values[x][i] + distance[x] < distance[i]){
                 //    distance[i] = values[x][i] + distance[i];
                 //}
-                distance[i] = Math.min(distance[i], distance[x]+values[x][i]);
+                distance[y] = Math.min(distance[y], distance[x]+values[x][y]);
             }
-            count ++;
         }
 
         int res = Arrays.stream(distance).max().getAsInt();
