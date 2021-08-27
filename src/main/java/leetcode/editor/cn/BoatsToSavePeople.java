@@ -1,3 +1,4 @@
+//2021-08-26
 //第881题
 //第 i 个人的体重为 people[i]，每艘船可以承载的最大重量为 limit。 
 //
@@ -44,6 +45,7 @@ public class BoatsToSavePeople{
     public static void main(String[] args){
         Solution solution = new BoatsToSavePeople().new Solution();
         System.out.println(solution.numRescueBoats(new int[]{3,2,2,2}, 4));
+        System.out.println(solution2(new int[]{3,2,2,2}, 4));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
@@ -78,4 +80,27 @@ class Solution {
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
+    /**
+     * 排序 + 双指针解法
+     * @param people
+     * @param limit
+     * @return
+     */
+    public static int solution2(int [] people, int limit){
+        int res = 0;
+        Arrays.sort(people);
+        if(people[0] > limit/2){
+            return people.length;
+        }
+        int left = 0;
+        int right = people.length-1;
+        while (right >= left){
+            if(people[right] + people[left] <= limit){
+                left++;
+            }
+            res ++;
+            right --;
+        }
+        return res;
+    }
 }
