@@ -119,10 +119,10 @@ public static int solution2(String version1, String version2){
         int v1Num = 0;
         int v2Num = 0;
         if(i < v1.length){
-            v1Num = Integer.parseInt(v2[i]);
+            v1Num = Integer.parseInt(v1[i]);
         }
         if(i < v2.length){
-            v2Num = Integer.parseInt(v1[i]);
+            v2Num = Integer.parseInt(v2[i]);
         }
         if(v1Num>v2Num){
             return 1;
