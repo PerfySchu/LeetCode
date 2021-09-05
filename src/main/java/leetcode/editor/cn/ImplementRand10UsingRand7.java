@@ -73,4 +73,9 @@ class Solution extends SolBase {
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
+    class SolBase{
+        int rand7(){
+            return (int) (Math.random() * 7);
+        }
+    }
 }
