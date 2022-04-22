@@ -51,8 +51,8 @@ public class ArrayOfDoubledPairs{
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    static int N = 100010, M = N * 2;
-    static int[] cnts = new int[M * 2];
+    int N = 100010, M = N * 2;
+    int[] cnts = new int[M * 2];
     public boolean canReorderDoubled(int[] arr) {
         Arrays.fill(cnts, 0);
         PriorityQueue<Integer> q = new PriorityQueue<>(Comparator.comparingInt(Math::abs));
