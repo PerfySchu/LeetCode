@@ -1,0 +1,153 @@
+## 基本分析
+
+本题的基本思路与 [264. 丑数 II : 从朴素优先队列到多路归并](https://mp.weixin.qq.com/s?__biz=MzU4NDE3MTEyMA==&mid=2247490029&idx=1&sn=bba9ddff88d247db310406ee418d5a15) 完全一致。
+
+---
+
+## 优先队列（小根堆）
+
+有了基本的分析思路，一个简单的解法是使用优先队列：
+
+1. 起始先将最小数值 $1$ 放入队列
+2. 每次从队列取出最小值 $x$，然后将 $x$ 所对应的数值 $3x$、$5x$ 和 $7x$ 进行入队
+3. 对步骤 2 循环多次，第 $k$ 次出队的值即是答案
+
+为了防止同一数值多次进队，我们需要使用数据结构 $Set$ 来记录入过队列的数值。
+
+代码：
+
+* []
+
+```Java
+class Solution {
+    public int getKthMagicNumber(int k) {
+        int[] nums = new int[]{3, 5, 7};
+        PriorityQueue<Long> q = new PriorityQueue<>();
+        Set<Long> set = new HashSet<>();
+        q.add(1L); set.add(1L);
+        while (!q.isEmpty()) {
+            long t = q.poll();
+            if (--k == 0) return (int) t;
+            for (int x : nums) {
+                if (!set.contains(x * t)) {
+                    q.add(x * t); set.add(x * t);
+                }
+            }
+        }
+        return -1;
+    }
+}
+```
+
+* []
+
+```Python
+class Solution:
+    def getKthMagicNumber(self, k: int) -> int:
+        nums = [3, 5, 7]
+        q, vis = [], set()
+        q.append(1)
+        vis.add(1)
+        while q:
+            t = heapq.heappop(q)
+            k -= 1
+            if k == 0:
+                return t
+            for x in nums:
+                if t * x not in vis:
+                    heapq.heappush(q, t * x)
+                    vis.add(t * x)
+        return -1
+```
+
+* 时间复杂度：$O(k\log{k})$
+* 空间复杂度：$O(k)$
+
+---
+
+## 多路归并（多指针）
+
+从解法一中不难发现，我们「往后产生的数值」都是基于「已有数值」而来（使用「已有数值」乘上 $3$、$5$、$7$）。
+
+因此，如果我们最终的数值序列为 $a1,a2,a3,...,an$ 的话，序列中的每一个数都必然能够被以下三个序列（中的至少一个）覆盖：
+
+* 由数值 $\times 3$ 所得的有序序列：$1 \times 3$、$2 \times 3$、$3 \times 3$、$4 \times 3$、$5 \times 3$、$6 \times 3$、$8 \times 3$ ...
+* 由数值 $\times 5$ 所得的有序序列：$1 \times 5$、$2 \times 5$、$3 \times 5$、$4 \times 5$、$5 \times 5$、$6 \times 5$、$8 \times 5$ ...
+* 由数值 $\times 6$ 所得的有序序列：$1 \times 7$、$2 \times 7$、$3 \times 7$、$4 \times 7$、$5 \times 7$、$6 \times 7$、$8 \times 6$ ...
+
+举个🌰，假设我们需要求得 $[1, 3, 5, 7, 9, 15, 21]$ 数值序列 $arr$ 的最后一位，那么该序列可以看作以下三个有序序列归并而来：
+
+* $1 \times 3, 3 \times 3, 5 \times 3, ... , 15 \times 3, 21 \times 3$ ，将 $3$ 提出，即 $arr \times 3$
+* $1 \times 5, 3 \times 5, 5 \times 5, ... , 15 \times 5, 21 \times 5$ ，将 $5$ 提出，即 $arr \times 5$
+* $1 \times 7, 3 \times 7, 5 \times 7, ... , 15 \times 7, 21 \times 7$ ，将 $7$ 提出，即 $arr \times 7$
+
+因此我们可以使用三个指针来指向目标序列 $arr$ 的某个下标（下标 $0$ 作为哨兵不使用，起始都为 $1$），使用 $arr[下标] \times 系数$（`3`、`5` 和 `7`） 代表当前使用到三个有序序列中的哪一位，同时使用 $idx$ 表示当前生成到 $arr$ 哪一位数值。
+
+代码：
+
+* []
+
+```Java
+class Solution {
+    public int getKthMagicNumber(int k) {
+        int[] ans = new int[k + 1];
+        ans[1] = 1;
+        for (int i3 = 1, i5 = 1, i7 = 1, idx = 2; idx <= k; idx++) {
+            int a = ans[i3] * 3, b = ans[i5] * 5, c = ans[i7] * 7;
+            int min = Math.min(a, Math.min(b, c));
+            if (min == a) i3++;
+            if (min == b) i5++;
+            if (min == c) i7++;
+            ans[idx] = min;
+        }
+        return ans[k];
+    }
+}
+```
+
+* []
+
+```TypeScript
+function getKthMagicNumber(k: number): number {
+    const ans = new Array<number>(k + 1).fill(1)
+    for (let i3 = 1, i5 = 1, i7 = 1, idx = 2; idx <= k; idx++) {
+        const a = ans[i3] * 3, b = ans[i5] * 5, c = ans[i7] * 7
+        const min = Math.min(a, Math.min(b, c))
+        if (a == min) i3++
+        if (b == min) i5++
+        if (c == min) i7++
+        ans[idx] = min
+    }
+    return ans[k]
+};
+```
+
+* []
+
+```Python
+class Solution:
+    def getKthMagicNumber(self, k: int) -> int:
+        ans = [1] * (k + 1)
+        i3, i5, i7 = 1, 1, 1
+        for idx in range(2, k + 1):
+            a, b, c = ans[i3] * 3, ans[i5] * 5, ans[i7] * 7
+            cur = min([a, b, c])
+            i3 = i3 + 1 if cur == a else i3
+            i5 = i5 + 1 if cur == b else i5
+            i7 = i7 + 1 if cur == c else i7
+            ans[idx] = cur
+        return ans[k]
+```
+
+* 时间复杂度：$O(k)$
+* 空间复杂度：$O(k)$
+
+---
+
+## 最后
+
+**如果有帮助到你，请给题解点个赞和收藏，让更多的人看到 ~ ("▔□▔)/**
+
+也欢迎你 [关注我](https://oscimg.oschina.net/oscnet/up-19688dc1af05cf8bdea43b2a863038ab9e5.png) 和 加入我们的[「组队打卡」](https://leetcode-cn.com/u/ac_oier/)小群 ，提供写「证明」&「思路」的高质量题解。
+
+所有题解已经加入 [刷题指南](https://github.com/SharingSource/LogicStack-LeetCode/wiki)，欢迎 star 哦 ~

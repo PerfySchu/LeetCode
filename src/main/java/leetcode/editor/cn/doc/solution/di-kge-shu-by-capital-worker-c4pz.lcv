@@ -1,0 +1,90 @@
+# 方法一：最小堆
+
+根据题意，我们想要找到只能含有`3`、`5`、`7`的质因数的数字，所以若`x`符合，则`3x`、`5x`、`7x`一定符合。
+因此我们枚举所有的`3x`、`5x`、`7x`，然后按照大小依次进行排列取第`k`个即可。
+
+我们可以采用最小堆来存放所有的`3x`、`5x`、`7x`，然后取堆顶元素，依次取`k`次即可
+
+* java
+
+```java
+public int getKthMagicNumber(int k) {
+    int[] nums = {3, 5, 7};
+    //是否访问 相同的算一次
+    Set<Long> visited = new HashSet<>();
+    PriorityQueue<Long> queue = new PriorityQueue<>();
+    //初始值为1，即x = 1
+    visited.add(1L);
+    queue.offer(1L);
+    //第k个元素
+    int target = 0;
+    for (int i = 0; i < k; i++) {
+        //弹出堆顶元素
+        long poll = queue.poll();
+        target = (int) poll;
+        for (int num : nums) {
+            //依次相乘 即x是 3x、5x、7x也是
+            long cur = poll * num;
+            //相同元素仅仅加入一次
+            if (!visited.contains(cur)) {
+                visited.add(cur);
+                queue.offer(cur);
+            }
+        }
+    }
+    return target;
+}
+```
+
+# 方法二：动态规划
+
+由于方法一将所有的`3x`、`5x`、`7x`都存放到最小堆中，会导致数字过大的问题，并且出现了非常多的冗余数字在堆中。
+由于`3x`、`5x`、`7x`都是由`x`构成，因此可以采用动态规划来进行处理。
+
+开始时，`dp[0] = 1`
+方法一中我们将`3x`、`5x`、`7x`都存放到了堆中，我们现在只需要将`3x`、`5x`、`7x`中的最小值放入`dp[i]`即可，然后用三个指针记录`i3`、`i5`、`i7`相乘的`x`的索引，方便后续在进行计算。
+
+![image.png](https://pic.leetcode-cn.com/1664322590-NoPfJR-image.png)
+
+* java
+
+```java
+    public int getKthMagicNumber(int k) {
+        int[] dp = new int[k];
+        //3的位置
+        int i3 = 0;
+        //5的位置
+        int i5 = 0;
+        //7的位置
+        int i7 = 0;
+        dp[0] = 1;
+        for(int i = 1; i < k; i++){
+            //找到最小的元素
+            dp[i] = Math.min(dp[i3] * 3, Math.min(dp[i5] * 5, dp[i7] * 7));
+            //相等的话给index++
+            if(dp[i] == dp[i3] * 3){
+                i3++;
+            }
+            //相等的话给index++
+            if(dp[i] == dp[i5] * 5){
+                i5++;
+            }
+            //相等的话给index++
+            if(dp[i] == dp[i7] * 7){
+                i7++;
+            }
+        }
+
+        return dp[k - 1];
+    }
+
+```
+
+![image.png](https://pic.leetcode-cn.com/1664320541-IeBYNf-image.png)
+
+**有小伙伴私聊问我为什么最近没更题解，没办法啦，新产品上线，忙过这段时间就好啦，希望没工作的小伙伴都可以找到自己心仪的工作。**
+
+**唯有坚持和自律，才能遇见更好的自己，愿大家都能干自己想干的事情，大家加油！！**
+
+写题解不易，**如果对您有帮助，记得关注 + 点赞 + 收藏呦！！！**
+**每天都会更新每日一题题解，大家加油！！**
