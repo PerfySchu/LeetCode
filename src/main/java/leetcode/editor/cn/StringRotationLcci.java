@@ -40,8 +40,7 @@ public class StringRotationLcci{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public boolean isFlipedString(String s1, String s2) {
-        return s1.length() == 0 && s2.length() == 0
-                || s1.length()>0 && s2.length()>0 && (s1+s1).contains(s2);
+        return s1.length() == s2.length() && (s1+s1).contains(s2);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
