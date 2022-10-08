@@ -34,16 +34,37 @@
 // Related Topics 贪心 数组 双指针 排序 👍 233 👎 0
 
 package leetcode.editor.cn;
+
+import java.util.Arrays;
+import java.util.TreeMap;
+
 public class AdvantageShuffle{
     public static void main(String[] args){
         Solution solution = new AdvantageShuffle().new Solution();
+        System.out.println(Arrays.toString(solution.advantageCount(new int[]{718967141,189971378,341560426,23521218,339517772}, new int[]{967482459,978798455,744530040,3454610,940238504})));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[] advantageCount(int[] nums1, int[] nums2) {
-
-        return null;
-
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for (int num : nums1) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        int length = nums1.length;
+        int[] ans = new int[length];
+        for (int i = 0; i < nums2.length; i++) {
+            Integer higher = map.higherKey(nums2[i]);
+            if(higher == null){
+                higher = map.firstKey();
+            }
+            ans[i] = higher;
+            if (map.get(higher) == 1) {
+                map.remove(higher);
+            }else {
+                map.put(higher, map.get(higher)-1);
+            }
+        }
+        return ans;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

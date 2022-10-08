@@ -38,12 +38,12 @@ package leetcode.editor.cn;
 public class CheckIfBinaryStringHasAtMostOneSegmentOfOnes{
     public static void main(String[] args){
         Solution solution = new CheckIfBinaryStringHasAtMostOneSegmentOfOnes().new Solution();
+        System.out.println(solution.checkOnesSegment("1001"));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public boolean checkOnesSegment(String s) {
-
-        return false;
+        return s.split("0").length == 1;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

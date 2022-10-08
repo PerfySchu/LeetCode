@@ -82,12 +82,38 @@ package leetcode.editor.cn;
 public class ReformatPhoneNumber{
     public static void main(String[] args){
         Solution solution = new ReformatPhoneNumber().new Solution();
+        System.out.println(solution.reformatNumber("1234"));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public String reformatNumber(String number) {
-
-        return null;
+        String str = number.replace("-", "")
+                .replace(" ", "");
+        int length = str.length();
+        int left = length % 3;
+        if(left != 1){
+            int i = 0;
+            StringBuilder sb = new StringBuilder();
+            while(i+3 < length){
+                sb.append(str, i, i+3).append('-');
+                i+=3;
+            }
+            if (i == length-1) {
+                sb.deleteCharAt(sb.length()-1);
+            }else {
+                sb.append(str, i, length);
+            }
+            return sb.toString();
+        } else{
+            int i = 0;
+            StringBuilder sb = new StringBuilder();
+            while(i+3 <= length-4){
+                sb.append(str, i, i+3).append("-");
+                i+=3;
+            }
+            sb.append(str, i, i+2).append('-').append(str, i+2, i+4);
+            return sb.toString();
+        }
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
