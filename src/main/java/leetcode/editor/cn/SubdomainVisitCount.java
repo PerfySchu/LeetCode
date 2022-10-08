@@ -78,15 +78,12 @@ class Solution {
                 num = Integer.valueOf(arr[0]);
                 str = arr[1];
             }
-            String[] split = str.split("\\.");
-            String sub = "";
-            for (int i = split.length-1; i >= 0; i--) {
-                if (sub.length() == 0) {
-                    sub = split[i];
-                }else {
-                    sub = split[i] + "." + sub;
+            map.put(str, map.getOrDefault(str, 0) + num);
+            for (int i = 0; i < str.length(); i++) {
+                if (str.charAt(i) == '.') {
+                    String substring = str.substring(i + 1);
+                    map.put(substring, map.getOrDefault(substring, 0) + num);
                 }
-                map.put(sub, map.getOrDefault(sub, 0) + num);
             }
         }
         List<String> ans = new ArrayList<>();
