@@ -83,11 +83,9 @@ class Solution {
                 right++;
             }else{
                 ans = Math.max(ans, right - left);
-                Integer integer = map.get(fruits[left]);
-                if(integer == 1){
+                map.put(fruits[left], map.getOrDefault(fruits[left], 0)-1);
+                if (map.get(fruits[left])<1) {
                     map.remove(fruits[left]);
-                }else{
-                    map.put(fruits[left], integer-1);
                 }
                 left++;
             }
