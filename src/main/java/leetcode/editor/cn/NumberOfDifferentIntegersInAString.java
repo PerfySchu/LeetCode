@@ -47,8 +47,10 @@
 
 package leetcode.editor.cn;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NumberOfDifferentIntegersInAString{
     public static void main(String[] args){
@@ -58,18 +60,10 @@ public class NumberOfDifferentIntegersInAString{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int numDifferentIntegers(String word) {
-        Set<String> set = new HashSet<>();
-        String s = word.replaceAll("([a-z]+)", " ");
-        String[] arr = s.split(" ");
-        for (String str : arr) {
-            if (str != null && !"".equals(str)) {
-                while (str.startsWith("0")){
-                    str = str.substring(1);
-                }
-                set.add(str);
-            }
-        }
-        return set.size();
+        return Arrays.stream(word.replaceAll("([a-z]+)", " ").trim().split(" "))
+                .filter(str -> !str.isEmpty())
+                .map(str -> str.replaceAll("^[0]+", ""))
+                .collect(Collectors.toSet()).size();
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
