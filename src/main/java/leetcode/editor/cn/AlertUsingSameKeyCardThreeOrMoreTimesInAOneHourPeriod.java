@@ -65,20 +65,71 @@
 
 package leetcode.editor.cn;
 
-import java.util.List;
+import java.util.*;
 
 public class AlertUsingSameKeyCardThreeOrMoreTimesInAOneHourPeriod{
     public static void main(String[] args){
         Solution solution = new AlertUsingSameKeyCardThreeOrMoreTimesInAOneHourPeriod().new Solution();
+//        System.out.println(solution.alertNames(new String[]{"leslie","leslie","leslie","clare","clare","clare","clare"},
+//                new String[]{"13:00","13:20","14:00","18:00","18:51","19:30","19:49"}));
+        System.out.println(solution.alertNames(new String[]{"a","a","a","a","a","b","b","b","b","b","b"},
+                new String[]{"23:20","11:09","23:30","23:02","15:28","22:57","23:40","03:43","21:55","20:38","00:19"}));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public List<String> alertNames(String[] keyName, String[] keyTime) {
 
+        Map<String, List<String>> nameTimes = new HashMap<>();
+        for (int i = 0; i < keyName.length; i++) {
+            List<String> timeList = nameTimes.getOrDefault(keyName[i], new ArrayList<>());
+            timeList.add(keyTime[i]);
+            nameTimes.put(keyName[i], timeList);
+        }
+        List<String> ans = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : nameTimes.entrySet()) {
+            List<String> timeList = entry.getValue();
+            Collections.sort(timeList);
+            int max = 1;
+            int left = 0;
+            int right = left+1;
+            while(left<timeList.size() && right<timeList.size()){
+                String begin = timeList.get(left);
+                String curr = timeList.get(right);
+                if (check(begin, curr)){
+                    right++;
+                    max++;
+                    if(max >= 3){
+                        ans.add(entry.getKey());
+                        break;
+                    }
+                }else{
+                    left++;
+                    right = left+1;
+                    max = 1;
+                }
+            }
+        }
+        Collections.sort(ans);
+        return ans;
+    }
 
-        //TODO：
-
-        return null;
+    private boolean check(String begin, String end){
+        String[] arr1 = begin.split(":");
+        String[] arr2 = end.split(":");
+        int s11 = Integer.parseInt(arr1[0]);
+        int s12 = Integer.parseInt(arr1[1]);
+        int s21 = Integer.parseInt(arr2[0]);
+        int s22 = Integer.parseInt(arr2[1]);
+        if (s11 == s21) {
+            return true;
+        }
+        if (s21 - s11 >1) {
+            return false;
+        }
+        if(s21 - s11 == 1 && s22 <= s12){
+            return true;
+        }
+        return false;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
