@@ -57,11 +57,11 @@ public class BinaryTreeColoringGame{
 
     public class TreeNode {
         int val;
-        EvaluateBooleanBinaryTree.TreeNode left;
-        EvaluateBooleanBinaryTree.TreeNode right;
+        TreeNode left;
+        TreeNode right;
         TreeNode() {}
         TreeNode(int val) { this.val = val; }
-        TreeNode(int val, EvaluateBooleanBinaryTree.TreeNode left, EvaluateBooleanBinaryTree.TreeNode right) {
+        TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
             this.left = left;
             this.right = right;
@@ -84,11 +84,24 @@ public class BinaryTreeColoringGame{
  * }
  */
 class Solution {
+    private int x, lsz, rsz;
     public boolean btreeGameWinningMove(TreeNode root, int n, int x) {
+        this.x = x;
+        dfs(root);
+        return Math.max(Math.max(lsz, rsz), n-1-lsz-rsz)*2>n;
+    }
 
-        //TODO
-
-        return true;
+    private int dfs(TreeNode node){
+        if(node == null){
+            return 0;
+        }
+        int ls = dfs(node.left);
+        int rs = dfs(node.right);
+        if(node.val == x){
+            lsz = ls;
+            rsz = rs;
+        }
+        return ls + rs + 1;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
