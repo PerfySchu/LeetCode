@@ -51,6 +51,7 @@ public class MinimumRecolorsToGetKConsecutiveBlackBlocks{
     public static void main(String[] args){
         Solution solution = new MinimumRecolorsToGetKConsecutiveBlackBlocks().new Solution();
         System.out.println(solution.minimumRecolors("WBBWWBBWBW", 7));
+        System.out.println(solution.minimumRecolors("WBWBBBW", 2));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
