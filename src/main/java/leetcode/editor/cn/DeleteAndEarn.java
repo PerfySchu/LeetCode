@@ -45,34 +45,31 @@ package leetcode.editor.cn;
 public class DeleteAndEarn{
     public static void main(String[] args){
         Solution solution = new DeleteAndEarn().new Solution();
-        System.out.println(solution.deleteAndEarn(new int[]{3,4,2}));
+        System.out.println(solution.deleteAndEarn(new int[]{1,1,1}));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int deleteAndEarn(int[] nums) {
-        if (nums == null || nums.length == 0) {
+        int n = nums.length;
+        if (n == 0) {
             return 0;
-        } else if (nums.length == 1) {
+        }
+        if (n == 1) {
             return nums[0];
         }
-        int len = nums.length;
-        int max = nums[0];
-        for (int i = 0; i < len; ++i) {
-            max = Math.max(max, nums[i]);
+        int[] cnts = new int[10010];
+        int max = 0;
+        for (int x : nums) {
+            cnts[x]++;
+            max = Math.max(max, x);
         }
-        //      构造一个新的数组all
-        int[] all = new int[max + 1];
-        for (int item : nums) {
-            all[item] ++;
+        // f[i][0] 代表「不选」数值 i；f[i][1] 代表「选择」数值 i
+        int[][] f = new int[max + 1][2];
+        for (int i = 1; i <= max; i++) {
+            f[i][1] = f[i - 1][0] + i * cnts[i];
+            f[i][0] = Math.max(f[i - 1][1], f[i - 1][0]);
         }
-        int[] dp = new int[max + 1];
-        dp[1] = all[1] * 1;
-        dp[2] = Math.max(dp[1], all[2] * 2);
-        //      动态规划求解
-        for (int i = 2; i <= max; ++i) {
-            dp[i] = Math.max(dp[i - 1], dp[i - 2] + i * all[i]);
-        }
-        return dp[max];
+        return Math.max(f[max][0], f[max][1]);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
