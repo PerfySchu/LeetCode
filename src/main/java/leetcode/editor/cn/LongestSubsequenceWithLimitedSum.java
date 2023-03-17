@@ -62,12 +62,25 @@ class Solution {
         }
         int[] ans = new int[queries.length];
         for (int i = 0; i < queries.length; i++) {
-            for (int j = n-1; j >= 0; j--) {
-                if (queries[i] >= preSum[j]) {
-                    ans[i] = j+1;
-                    break;
+            //普通查找
+//            for (int j = n-1; j >= 0; j--) {
+//                if (queries[i] >= preSum[j]) {
+//                    ans[i] = j+1;
+//                    break;
+//                }
+//            }
+            //二分查找
+            int left = 0;
+            int right = n;
+            while (left < right){
+                int mid = left + (right-left)/2;
+                if(preSum[mid] > queries[i]){
+                    right = mid;
+                }else{
+                    left = mid + 1;
                 }
             }
+            ans[i] = left;
         }
         return ans;
     }
