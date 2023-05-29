@@ -50,16 +50,16 @@
 
 package leetcode.editor.cn;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class ShortestPathInBinaryMatrix{
     public static void main(String[] args){
         Solution solution = new ShortestPathInBinaryMatrix().new Solution();
-        System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{0,1},{1,0}}));
-        System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{0,0,0},{1,1,0},{1,1,0}}));
-        System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{1,0,0},{1,1,0},{1,1,0}}));
+        //System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{0,1},{1,0}}));
+        //System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{0,0,0},{1,1,0},{1,1,0}}));
+        //System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{1,0,0},{1,1,0},{1,1,0}}));
+        System.out.println(solution.shortestPathBinaryMatrix(new int[][]{{0,0,0},{0,0,1},{0,0,0}}));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
