@@ -44,9 +44,7 @@
 
 package leetcode.editor.cn;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class EqualRowAndColumnPairs{
     public static void main(String[] args){
@@ -64,7 +62,6 @@ class Solution {
             for (int j = 0; j < n; j++) {
                 newGrid[i][j] = grid[j][i];
             }
-
         }
         for (int[] row : newGrid) {
             for (int[] column : grid) {
