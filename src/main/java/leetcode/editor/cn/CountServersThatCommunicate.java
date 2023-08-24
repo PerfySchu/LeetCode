@@ -62,26 +62,25 @@ class Solution {
         int n = grid[0].length;
         int[] row = new int[m];
         int[] col = new int[n];
-        int count = 0;
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                //对每一行每一列进行统计，且记录所有服务器的数量
+                //对每一行每一列进行统计
                 if(grid[i][j]==1){
                     row[i]++;
                     col[j]++;
-                    count++;
                 }
             }
         }
+        int ans = 0;
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                //服务器的数量减去独行或者独列的数量
-                if(grid[i][j]==1&&row[i]==1&&col[j]==1){
-                    count--;
+                //当前位置存在服务器，且当前行或者当前列存在其他服务器
+                if(grid[i][j]==1 && (row[i]>1 || col[j]>1)){
+                    ans++;
                 }
             }
         }
-        return count;
+        return ans;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
