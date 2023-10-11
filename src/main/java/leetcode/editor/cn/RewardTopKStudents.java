@@ -74,7 +74,6 @@ class Solution {
             words.put(word, -1);
         }
         int n = report.length;
-        int[] sorces = new int[n];
         int[][] A = new int[n][2];
         for (int i = 0; i < n; i++) {
             int score = 0;
