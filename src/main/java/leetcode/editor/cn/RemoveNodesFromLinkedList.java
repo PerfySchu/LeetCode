@@ -44,8 +44,15 @@ package leetcode.editor.cn;
 public class RemoveNodesFromLinkedList{
     public static void main(String[] args){
         Solution solution = new RemoveNodesFromLinkedList().new Solution();
+        //5,2,13,3,8
+        ListNode node8 = new RemoveNodesFromLinkedList.ListNode(8, null);
+        ListNode node3 = new RemoveNodesFromLinkedList.ListNode(3, node8);
+        ListNode node13 = new RemoveNodesFromLinkedList.ListNode(13, null);
+        ListNode node2 = new RemoveNodesFromLinkedList.ListNode(2, node13);
+        ListNode node5 = new RemoveNodesFromLinkedList.ListNode(5, node2);
+        System.out.println(solution.removeNodes(node5));
     }
-    public class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
         ListNode() {}
