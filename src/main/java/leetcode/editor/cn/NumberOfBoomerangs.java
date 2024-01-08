@@ -55,6 +55,8 @@ public class NumberOfBoomerangs{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int numberOfBoomerangs(int[][] points) {
+        //假定一个点，从剩余点里面选两个，做全排操作 m*(m-1)
+        //遍历所有点
         int ans = 0;
         for (int[] p : points) {
             Map<Integer, Integer> cnt = new HashMap<>();
