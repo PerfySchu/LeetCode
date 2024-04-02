@@ -41,6 +41,7 @@ import java.util.List;
 public class AllPossibleFullBinaryTrees{
     public static void main(String[] args){
         Solution solution = new AllPossibleFullBinaryTrees().new Solution();
+        System.out.println(solution.allPossibleFBT(7));
     }
     public class TreeNode {
         int val;
