@@ -49,7 +49,6 @@ package leetcode.editor.cn;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -76,25 +75,17 @@ class Solution {
         List<Integer> nums = new ArrayList<>();
         Arrays.sort(changed);
         for (int num : changed) {
-            if (!numMap.containsKey(num) || !numMap.containsKey(num*2)) {
+            if (numMap.get(num) == 0) {
                 continue;
             }
-            if (numMap.getOrDefault(num, 0) == 1) {
-                numMap.remove(num);
-            }else{
-                numMap.put(num, numMap.getOrDefault(num, 0)-1);
+            numMap.put(num, numMap.getOrDefault(num, 0)-1);
+            if(numMap.getOrDefault(num*2, 0) == 0){
+                return new int[0];
             }
-            if (numMap.getOrDefault(num*2, 0) == 1) {
-                numMap.remove(num*2);
-            }else{
-                numMap.put(num*2, numMap.getOrDefault(num*2, 0)-1);
-            }
+            numMap.put(num*2, numMap.getOrDefault(num*2, 0)-1);
             nums.add(num);
         }
-        if (numMap.isEmpty()) {
-            return nums.stream().mapToInt(Integer::intValue).toArray();
-        }
-        return new int[]{};
+        return nums.stream().mapToInt(Integer::intValue).toArray();
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
