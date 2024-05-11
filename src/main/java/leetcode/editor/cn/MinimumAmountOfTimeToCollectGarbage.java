@@ -83,13 +83,13 @@ class Solution {
         for (int i = 0; i < garbage.length; i++) {
             ans += garbage[i].length();
             if (garbage[i].contains("M")) {
-                maxM = Math.max(maxM, i);
+                maxM = i;
             }
             if (garbage[i].contains("P")) {
-                maxP = Math.max(maxP, i);
+                maxP = i;
             }
             if (garbage[i].contains("G")) {
-                maxG = Math.max(maxG, i);
+                maxG = i;
             }
         }
         return ans + preSum[maxG] + preSum[maxM] + preSum[maxP];
