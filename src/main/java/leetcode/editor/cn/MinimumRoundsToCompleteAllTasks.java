@@ -59,14 +59,10 @@ class Solution {
         int ans = 0;
         for (Map.Entry<Integer, Integer> next : countMap.entrySet()) {
             Integer value = next.getValue();
-            if (value % 3 == 0  || value % 3 == 2) {
-                ans += (value / 3 + (value % 3 > 0 ? 1 : 0));
+            if (value == 1) {
+                return -1;
             }else {
-                int count = value / 3 - 1;
-                if (count<0) {
-                    return -1;
-                }
-                ans += count + (value - 3 * count)/2;
+                ans += (value+2)/3;
             }
         }
         return ans;
