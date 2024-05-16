@@ -63,10 +63,6 @@
 
 package leetcode.editor.cn;
 
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Queue;
-
 public class MaximumNumberOfWeeksForWhichYouCanWork{
     public static void main(String[] args){
         Solution solution = new MaximumNumberOfWeeksForWhichYouCanWork().new Solution();
