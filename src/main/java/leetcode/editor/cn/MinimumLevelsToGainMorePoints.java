@@ -89,8 +89,19 @@ public class MinimumLevelsToGainMorePoints{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int minimumLevels(int[] possible) {
-
-        return 0;
+        int n = possible.length;
+        int total = 0;
+        for (int x : possible) {
+            total += x == 1 ? 1 : -1;
+        }
+        int pre = 0;
+        for (int i = 0; i < n - 1; i++) {
+            pre += possible[i] == 1 ? 1 : -1;
+            if (2 * pre > total) {
+                return i + 1;
+            }
+        }
+        return -1;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
