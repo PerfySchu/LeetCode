@@ -81,8 +81,8 @@ class Solution {
                 continue;
             }
             if (set.contains(from)) {
-                set.add(to);
                 set.remove(from);
+                set.add(to);
             }
         }
         return set.stream().sorted().collect(Collectors.toList());
