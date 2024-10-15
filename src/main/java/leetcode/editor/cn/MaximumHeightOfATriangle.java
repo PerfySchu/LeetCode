@@ -76,49 +76,27 @@ public class MaximumHeightOfATriangle{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int maxHeightOfTriangle(int red, int blue) {
-        int red2 = red;
-        int blue2 = blue;
 
-        //红色在上
-        int ans1 = 0;
-        int level1 = 1;
+        return Math.max(getMaxHeight(red,blue), getMaxHeight(blue,red));
+    }
+
+    private int getMaxHeight(int red, int blue){
+        int level = 1;
         while(red>0){
-            if (red>=level1) {
-                ans1++;
-                red-=level1;
-                level1++;
+            if (red>=level) {
+                red-=level;
+                level++;
             }else{
                 break;
             }
-            if(blue>=level1){
-                ans1++;
-                blue-=level1;
-                level1++;
-            }else{
-                break;
-            }
-        }
-
-        // 蓝色在上
-        int ans2 = 0;
-        int level2 = 1;
-        while(blue2>0){
-            if (blue2>=level2) {
-                ans2++;
-                blue2-=level2;
-                level2++;
-            }else{
-                break;
-            }
-            if(red2>=level2){
-                ans2++;
-                red2-=level2;
-                level2++;
+            if(blue>=level){
+                blue-=level;
+                level++;
             }else{
                 break;
             }
         }
-        return Math.max(ans1, ans2);
+        return level-1;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
