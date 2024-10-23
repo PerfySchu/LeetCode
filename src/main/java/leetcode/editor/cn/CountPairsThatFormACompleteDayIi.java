@@ -1,5 +1,5 @@
-//2024-10-22 15:56:49
-//第3184题
+//2024-10-23 10:56:33
+//第3185题
 //给你一个整数数组 hours，表示以 小时 为单位的时间，返回一个整数，表示满足 i < j 且 hours[i] + hours[j] 构成 整天 的下标
 //对 i, j 的数目。
 //
@@ -38,35 +38,32 @@
 // 提示：
 //
 //
-// 1 <= hours.length <= 100
+// 1 <= hours.length <= 5 * 10⁵
 // 1 <= hours[i] <= 10⁹
 //
 //
-// Related Topics 数组 哈希表 计数 👍 24 👎 0
+// Related Topics 数组 哈希表 计数 👍 22 👎 0
 
 package leetcode.editor.cn;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CountPairsThatFormACompleteDayI{
+public class CountPairsThatFormACompleteDayIi{
     public static void main(String[] args){
-        Solution solution = new CountPairsThatFormACompleteDayI().new Solution();
+        Solution solution = new CountPairsThatFormACompleteDayIi().new Solution();
         System.out.println(solution.countCompleteDayPairs(new int[]{12,12,30,24,24}));
-        System.out.println(solution.countCompleteDayPairs(new int[]{72,48,24,3}));
+        System.out.println( solution.countCompleteDayPairs(new int[]{72,48,24,3}));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public int countCompleteDayPairs(int[] hours) {
-        int ans = 0;
-        for (int i = 0; i < hours.length; i++) {
-            for (int j = i + 1; j < hours.length; j++) {
-                if ((hours[i] + hours[j]) % 24 == 0) {
-                    ans++;
-                }
-            }
+    public long countCompleteDayPairs(int[] hours) {
+        long ans = 0;
+        int[] cnt = new int[24];
+        for (int hour : hours) {
+            ans += cnt[(24 - hour % 24) % 24];
+            cnt[hour % 24]++;
         }
-
         return ans;
     }
 }
