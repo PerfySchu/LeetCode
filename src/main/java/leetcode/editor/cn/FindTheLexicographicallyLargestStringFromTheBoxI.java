@@ -72,9 +72,9 @@ class Solution {
         int len = word.length() - numFriends + 1;
         String ans = "";
         for (int i = 0; i < word.length(); i++) {
-            String left = word.substring(Math.max(0, i-len), i);
+            //String left = word.substring(Math.max(0, i-len), i);
             String right = word.substring(i, Math.min(i + len, word.length()));
-            ans = ans.compareTo(left) > 0 ? ans : left;
+            //ans = ans.compareTo(left) > 0 ? ans : left;
             ans = ans.compareTo(right) > 0 ? ans : right;
         }
         return ans;
